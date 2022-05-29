@@ -1,0 +1,789 @@
+// heaader//
+#include <iostream>
+#include <stdlib.h>
+#include <conio.h>
+#include <string>
+#include <array>
+#include <fstream>
+#include<windows.h>
+#include<ctime>
+#include <stdio.h>
+#pragma warning(disable : 4996)
+
+using namespace std;
+string waktu, nama;
+int x, y, h, m;
+void gotoxy(int x, int y) {
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+void delay(unsigned int msecond)
+{
+	clock_t goal = msecond + clock();
+	while (goal > clock());
+}
+
+// data //
+string kelas_travel;
+double jumlah, total;
+double harga1 = 175000;
+double harga2 = 150000;
+double diskon = 1500;
+string seat_hiace[10];
+string seat_bis[30];
+
+string input = "X";
+double sisa;
+int uangmu;
+
+
+
+void printKursihiace() //hiace
+{
+	cout << " --- list kursi ---  " << endl;
+	for (int i = 0; i < sizeof(seat_hiace) / sizeof(seat_hiace[0]); i++)
+	{
+		cout << "B" << i << ". " << seat_hiace[i] << endl;
+	}
+	cout << " ------------------  " << endl;
+}
+
+void printKursibis() //bis
+{
+	cout << " --- list kursi ---  " << endl;
+	for (int i = 0; i < sizeof(seat_bis) / sizeof(seat_bis[0]); i++)
+	{
+		cout << "B" << i << ". " << seat_bis[i] << endl;
+	}
+	cout << " ------------------  " << endl;
+}
+
+
+
+
+
+
+
+
+
+
+int menu, jumlah_tiket, nomor_kursi_pilihan;
+int* listkursi = new int[jumlah_tiket];
+// Data kendaraan - Kelas - Harga // 
+int hiace()
+{
+
+	do {
+		cout << "hiace \n";
+		cout << "Dengan harga per orang Rp.150.000 : \n";
+		cout << "\n==============================" << endl;
+		cout << "1. beli tiket" << endl;
+		cout << "2. cek status kursi" << endl;
+		cout << "3. exit" << endl;
+		cout << "input : "; cin >> menu;
+		cout << endl;
+
+		if (menu == 1)
+		{
+
+			//cout << "input nama : ";
+			//cin >> nama;
+
+			cout << "beli berapa tiket : ";
+			cin >> jumlah_tiket;
+
+			cout << "Travel  hiace \n";
+			cout << "Harga tiket per orang Rp.175.000 : \n";
+			cout << "1.Anda ingin membeli tiket  \n";
+			cout << "2. keluar \n";
+			cout << "Masukkan pilihan = ";
+			getline(cin, kelas_travel);
+			getline(cin, kelas_travel);
+
+			{
+				if (kelas_travel == "1")
+				{
+					total = jumlah_tiket * harga2 * diskon;
+					cout << "Total Harga Tiket        : Rp " << total;
+					cout << "\nuang kamu :" << endl;
+					cin >> uangmu;
+					sisa = uangmu - total;
+					cout << "kembalian : Rp " << sisa << endl;
+				}
+				else if (kelas_travel == "2")
+				{
+					return 0;
+				}
+				else
+				{
+					cout << "Kelas tidak tersedia \n";
+				}
+				(void)_getch();
+			}
+
+
+			printKursihiace();
+
+			for (int j = 0; j < jumlah_tiket; j++)
+			{
+				bool kursiKosong = false;
+				do {
+					cout << "pilih nomor kursi ke-" << j + 1 << " : ";
+					cin >> nomor_kursi_pilihan;
+
+					if (seat_hiace[nomor_kursi_pilihan] == "") {
+						seat_hiace[nomor_kursi_pilihan] = nama;
+						listkursi[j] = nomor_kursi_pilihan;
+						kursiKosong = true;
+					}
+					else {
+						cout << "kursi sudah ada yang menempati!" << endl;
+					}
+				} while (kursiKosong == false);
+			}
+
+			cout << "--------------------------------------" << endl;
+			cout << "| rekap" << endl;
+			cout << "| nama : " << nama << endl;
+			cout << "| jumlah kursi yang dibeli : " << jumlah_tiket << endl;
+			cout << "| nomor kursi : " << endl;
+			for (int i = 0; i < jumlah_tiket; i++)
+			{
+				cout << "| - B" << listkursi[i] << endl;
+			}
+			cout << "--------------------------------------" << endl;
+
+			//delete[] listkursi;
+		}
+		else if (menu == 2) {
+			printKursihiace();
+		}
+	} while (menu != 3);
+	return 0;
+}
+
+
+
+int bis()
+{
+
+	do {
+		cout << "bis \n";
+		cout << "Dengan harga per orang Rp.150.000 : \n";
+		cout << "\n==============================" << endl;
+		cout << "1. beli tiket" << endl;
+		cout << "2. cek status kursi" << endl;
+		cout << "3. exit" << endl;
+		cout << "input : "; cin >> menu;
+		cout << endl;
+
+		if (menu == 1)
+		{
+
+			//cout << "input nama : ";
+			//cin >> nama;
+
+			cout << "beli berapa tiket : ";
+			cin >> jumlah_tiket;
+
+
+			cout << "Bis \n";
+			cout << "Dengan harga per orang Rp.150.000 : \n";
+			cout << "1.ya untuk melanjutkan pembayaran  \n";
+			cout << "2. Keluar \n";
+			cout << "Masukkan pilihan = ";
+			getline(cin, kelas_travel);
+			getline(cin, kelas_travel);
+
+			{
+				if (kelas_travel == "1")
+				{
+					total = jumlah_tiket * harga2;
+					cout << "Total Harga Tiket        : Rp " << total;
+					cout << "\nuang kamu :" << endl;
+					cin >> uangmu;
+					sisa = uangmu - total;
+					cout << "kembalian :" << sisa << endl;
+				}
+				else if (kelas_travel == "2")
+				{
+					return 0;
+				}
+				else
+				{
+					cout << "Kelas tidak tersedia \n";
+				}
+				(void)_getch();
+			}
+
+
+
+			printKursibis();
+
+			for (int j = 0; j < jumlah_tiket; j++)
+			{
+				bool kursiKosong = false;
+				do {
+					cout << "pilih nomor kursi ke-" << j + 1 << " : ";
+					cin >> nomor_kursi_pilihan;
+
+					if (seat_bis[nomor_kursi_pilihan] == "") {
+						seat_bis[nomor_kursi_pilihan] = nama;
+						listkursi[j] = nomor_kursi_pilihan;
+						kursiKosong = true;
+					}
+					else {
+						cout << "kursi sudah ada yang menempati!" << endl;
+					}
+				} while (kursiKosong == false);
+			}
+
+			cout << "--------------------------------------" << endl;
+			cout << "| rekap" << endl;
+			cout << "| nama : " << nama << endl;
+			cout << "| jumlah kursi yang dibeli : " << jumlah_tiket << endl;
+			cout << "| nomor kursi : " << endl;
+			for (int i = 0; i < jumlah_tiket; i++)
+			{
+				cout << "| - B" << listkursi[i] << endl;
+			}
+			cout << "--------------------------------------" << endl;
+
+			//delete[] listkursi;
+		}
+		else if (menu == 2) {
+			printKursibis();
+		}
+	} while (menu != 3);
+	return 0;
+}
+
+
+// Fungsi Main // 
+int main()
+{
+
+
+	time_t now = time(0);
+	const char* dt = ctime(&now);
+	fstream print_tiket;
+	int x = 0;
+	int menu, departure, arrival, tanggal;
+	string  jadwal, kendaraan, cek_nama,bulan,tahun;
+	array <string, 3>kota = { "Surabaya","Jakarta", "Solo" };
+
+
+	while (x == 0)
+	{
+		system("cls");
+	loop:
+
+
+		for (h = 1; h < 20; h++)
+		{
+			delay(120);
+			gotoxy(h - 1, 0); cout << ' ';
+			gotoxy(h - 1, 1); cout << ' ';
+			gotoxy(h - 1, 2); cout << ' ';
+			gotoxy(h, 0); cout << "||-------------------Selamat datang- -------------------------||\n";
+			gotoxy(h, 1); cout << "||------------------ di Tebal Travel -------------------------||\n";
+			gotoxy(h, 2); cout << "||-------------Program Pemesanan tiket Travel ----------------||\n";
+			cout << endl;
+		}
+
+
+		// menu awal //
+		cout << "Selamat datang, silahkan pilih layanan di bawah ini. \n\n";
+		cout << "1. Pemesanan Tiket                                  \n";
+		cout << "2. Cek Pemesanan Tiket Anda                         \n";
+		cout << "3. Jadwal Keberangkatan                             \n";
+		cout << "4. Print Tiket                                      \n";
+		cout << "======== Pilih 0 Jika Telah Selesai Memesan ========\n";
+		cout << "silahkan masukkan nomor pilihan = ";
+		cin >> menu;
+		cout << endl;
+		cout << "-------------------------------------------------------\n";
+
+		// sub menu //
+		switch (menu)
+		{
+		case 1:
+			system("cls");
+			cout << "-------------------------------------------------------\n";
+			cout << "~               Pesan tiket anda di sini              ~\n\n";
+			cout << endl;
+			cout << "Silahkan masukkan Nama pemesan : ";
+			getline(cin, nama);
+			getline(cin, nama);
+			cout << endl;
+			cout << "Silahkan masukkan tanggal perjalanan : ";
+			cin >> tanggal;
+			cout << "Silahkan masukkan bulan perjalanan : ";
+			cin >> bulan;
+			cout << "Silahkan masukkan tahun perjalanan : ";
+			cin >> tahun;
+			cout << endl;
+
+			cout << "Asal kota keberangkatan    : \n";
+			cout << "1. Surabaya      \n";
+			cout << "2. Jakarta       \n";
+			cout << "3. Solo          \n";
+			cout << "Pilih kota keberangkatan anda = ";
+			cin >> departure;
+
+			if (departure == 1)
+			{
+				cout << "Kota asal keberangkatan, " << kota[0] << "\n" << endl;
+			}
+
+			else if (departure == 2)
+			{
+				cout << "Kota asal keberangkatan, " << kota[1] << "\n" << endl;
+			}
+
+			else if (departure == 3)
+			{
+				cout << "Kota asal keberangkatan, " << kota[2] << "\n" << endl;
+			}
+
+			else
+			{
+				cout << "Maaf, kota asal keberangkatan anda belum tersedia \n";
+			}
+
+			cout << "Tujuan kota keberangkatan   : \n";
+			cout << "1. Surabaya      \n";
+			cout << "2. Jakarta       \n";
+			cout << "3. Solo          \n";
+			cout << "Pilih kota tujuan anda = ";
+			cin >> arrival;
+
+			if (arrival == 1)
+			{
+				cout << "Tujuan kota keberangkatan, " << kota[0] << "\n" << endl;
+			}
+
+			else if (arrival == 2)
+			{
+				cout << "Tujuan kota keberangkatan, " << kota[1] << "\n" << endl;
+			}
+
+			else if (arrival == 3)
+			{
+				cout << "Tujuan kota keberangkatan, " << kota[2] << "\n" << endl;
+			}
+
+			else
+			{
+				cout << "Maaf, jalur tujuan anda belum tersedia \n";
+				goto loop;
+			}
+
+			cout << "-------------------------------------------------------\n";
+			cout << "Silahkan masukkan tanggal perjalanan \n";
+
+			// Asal Surabaya //
+			if (departure == 1 && arrival == 2)
+			{
+
+				system("cls");
+				cout << "~   Travel Jurusan Surabaya - Jakarta   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 08.00 - 18.00 \n";
+				cout << "2. 19.00 - 07.00 \n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+				if (jadwal == "08.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Hiace  \n";
+					cout << "2. Bis  \n";
+					cout << "Pilih kendaraan yang anda mau : ";
+					cin >> kendaraan;
+					cout << endl;
+
+					if (kendaraan == "hiace")
+					{
+						hiace();
+					}
+					else if (kendaraan == "bis")
+					{
+						bis();
+					}
+				}
+				else if (jadwal == "19.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. bis  \n";
+					cout << "Pilih kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+					if (kendaraan == "bis")
+					{
+						bis();
+					}
+					else
+					{
+						cout << "kendaraan tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+			else if (departure == 1 && arrival == 3)
+			{
+				system("cls");
+				cout << "~   Travel Jurusan Surabaya - Solo   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 10.00 - 14.00 \n";
+				cout << "2. 15.00 - 19.00 \n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+
+				if (jadwal == "10.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Hiace  \n";
+					cout << "Pilih kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+
+					if (kendaraan == "hiace")
+					{
+						hiace();
+					}
+					else
+					{
+						cout << "Kendaraan tidak tersedia ! \n";
+					}
+				}
+				else if (jadwal == "15.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Bis  \n";
+					cout << "Pilih kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+					if (kendaraan == "bis")
+					{
+						bis();
+					}
+					else
+					{
+						cout << "Kendaraan tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+			// Asal Jakarta //
+			else if (departure == 2 && arrival == 1)
+			{
+				system("cls");
+				cout << "~   Travel Jurusan Jakarta - Surabaya   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 15.00 - 01.00 \n\n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+
+				if (jadwal == "15.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Bis  \n";
+					cout << "Pilih kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+					if (kendaraan == "bis")
+					{
+						bis();
+					}
+					else
+					{
+						cout << "kendaraan tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+
+			else if (departure == 2 && arrival == 3)
+			{
+				system("cls");
+				cout << "~   Travel Jurusan Jakarta - Solo   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 08.00 - 16.00 \n\n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+
+				if (jadwal == "08.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Bis  \n";
+					cout << "Pilih kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+
+					if (kendaraan == "1")
+					{
+						bis();
+					}
+					else
+					{
+						cout << "kendaraan tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+
+			// Asal Solo //
+			else if (departure == 3 && arrival == 1)
+			{
+				system("cls");
+				cout << "~   Travel Jurusan Solo - Surabaya   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 08.00 - 12.00 \n";
+				cout << "2. 10.00 - 14.00 \n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+
+				if (jadwal == "08.00")
+				{
+					cout << "Kendaraan yang tersedia : \n";
+					cout << "1. Hiace  \n";
+					cout << "Pilih Kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+
+					if (kendaraan == "hiace")
+					{
+						hiace();
+					}
+					else
+					{
+						cout << "Kendaraan tidak tersedia ! \n";
+					}
+				}
+
+				else if (jadwal == "10.00")
+				{
+					cout << "Travel yang tersedia : \n";
+					cout << "1. Bis  \n";
+					cout << "Pilih Kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+					if (kendaraan == "1")
+					{
+						bis();
+					}
+					else
+					{
+						cout << "Kendaraan tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+			else if (departure == 3 && arrival == 2)
+			{
+				system("cls");
+				cout << "~   Travel Jurusan Solo - Jakarta   ~\n\n";
+				cout << "Jadwal yang tersedia : \n";
+				cout << "1. 18.00 - 06.00 \n";
+				cout << "Pilih jadwal anda : ";
+				getline(cin, jadwal);
+				getline(cin, jadwal);
+				cout << endl;
+
+				if (jadwal == "18.00")
+				{
+					cout << "Travel yang tersedia : \n";
+					cout << "1. Hiace  \n";
+					cout << "Pilih Kendaraan anda : ";
+					cin >> kendaraan;
+					cout << endl;
+
+					if (kendaraan == "hiace")
+					{
+						hiace();
+					}
+					else
+					{
+						cout << "Travel tidak tersedia ! \n";
+					}
+				}
+				else
+				{
+					cout << "Jadwal tidak tersedia ! \n";
+				}
+			}
+
+			else
+			{
+				cout << "Maaf, jadwal perjalanan tidak tersedia \n\n";
+			}
+
+			break;
+
+		case 2:
+
+			system("cls");
+			cout << "-------------------------------------------------------\n";
+			cout << "~              Lihat Pemesanan Tiket Anda             ~\n\n";
+			cout << "Masukkan nama pemesan tiket : ";
+			cin >> cek_nama;
+			cout << endl;
+
+			system("cls");
+
+			if (cek_nama == nama)
+			{
+
+				arrival = arrival - 1;
+				departure = departure - 1;
+				cout << "-------------------------------------------------------\n";
+				cout << "~              Lihat Pemesanan Tiket Anda             ~\n\n";
+				cout << "-------------------------------------------------------\n";
+				cout << "                         " << dt << "            " << endl;
+				cout << "Nama Pemesan         : " << nama << endl;
+				cout << "Tanggal Pembrangkatan: " << tanggal << " " << bulan << " " << tahun << " " << endl;
+				cout << "Kota Asal            : " << kota[departure] << endl;
+				cout << "Kota Tujuan          : " << kota[arrival] << endl;
+				cout << "Jadwal Keberangkatan : " << jadwal << endl;
+				cout << "Kendaraan            : " << kendaraan << endl;
+				cout << "jumlah kursi yang dibeli : " << jumlah_tiket << endl;
+				cout << "Total pembayaran     : " << "Rp." << total << endl;
+				cout << "Kursi yang anda pilih:  " << endl;
+				for (int m = 0; m < jumlah_tiket; m++)
+				{
+					cout << " - B" << listkursi[m] << endl;
+				}
+				cout << "Kode Pesanan Anda   : " << &kendaraan << endl;
+				cout << "press any key for out" << endl;
+			}
+			else
+			{
+				cout << "-------------------------------------------------------\n";
+				cout << "~              Lihat Pemesanan Tiket Anda             ~\n\n";
+				cout << "Data pemesanan tidak tersedia \n";
+			}
+			(void)_getch();
+			break;
+
+
+		case 3:
+			system("cls");
+			cout << "-------------------------------------------------------\n";
+			cout << "~              Jadwal Keberangkatan Travel            ~\n\n";
+			cout << "-------------------------------------------------------\n";
+			// Asal Surabaya //
+			cout << "Travel Jurusan Surabaya - Jakarta \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 08.00 - 18.00 \n";
+			cout << "2. 19.00 - 07.00 \n\n";
+
+			cout << "Travel Jurusan Surabaya - Solo    \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 10.00 - 14.00 \n";
+			cout << "2. 15.00 - 19.00 \n\n";
+
+			// Asal Jakarta //
+			cout << "Travel Jurusan Jakarta - Surabaya \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 15.00 - 01.00 \n\n";
+
+			cout << "Travel Jurusan Jakarta - Solo     \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 08.00 - 16.00 \n\n";
+
+			// Asal Solo //
+			cout << "Travel Jurusan Solo - Surabaya    \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 08.00 - 12.00 \n";
+			cout << "2. 10.00 - 14.00 \n\n";
+
+			cout << "Travel Jurusan Solo - Jakarta     \n";
+			cout << "Jadwal yang tersedia : \n";
+			cout << "1. 18.00 - 06.00 \n";
+			cout << "press any key for out" << endl;
+			(void)_getch();
+			break;
+
+		case 4:
+
+			print_tiket.open("TIKET_ANDA.txt", ios::out);
+			print_tiket << "-------------------------------------------------------\n";
+			print_tiket << "-                  SiTebal Travel                  -\n";
+			print_tiket << "-------------------------------------------------------\n\n";
+			print_tiket << "                         " << dt << "            " << endl;
+			print_tiket << "Nama Pemesan            : " << nama << endl;
+			print_tiket << "Tanggal Keberangkatan   : " << tanggal << " " << bulan << " " << tahun << " " << endl;
+			print_tiket << "Kota Asal               : " << kota[departure] << endl;
+			print_tiket << "Kota Tujuan             : " << kota[arrival] << endl;
+			print_tiket << "Jadwal Keberangakatan   : " << jadwal << endl;
+			print_tiket << "kendaraan               : " << kendaraan << endl;
+			print_tiket << "jumlah kursi yang dibeli: " << jumlah_tiket << endl;
+			print_tiket << "Total pembayaran        : " << "Rp." << total << endl;
+			print_tiket << "Kursi yang anda pilih:  " << endl;
+			for (int m = 0; m < jumlah_tiket; m++)
+			{
+				print_tiket << " - B" << listkursi[m] << endl;
+			}
+			print_tiket << "Kode Pesanan Anda   : " << &kendaraan << endl;
+			print_tiket.close();
+			break;
+
+		case 0:
+			cout << "--------------------------------------------------------" << endl;
+			cout << "              Terima Kasih Atas Kunjungan Anda          " << endl;
+			cout << "                    disi Tebal Travel                   " << endl;
+			cout << "--------------------------------------------------------" << endl;
+			cout << "--------------------------------------------------------" << endl;
+			system("pause");
+			return 0;
+
+
+		default:
+
+			cout << "pilihan tidak tersedia !\n";
+			break;
+
+
+			system("pause");
+			cin.get();
+
+		}
+	}
+}
+
+int listkursi1()
+{
+	return 0;
+}
