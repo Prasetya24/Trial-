@@ -1,0 +1,244 @@
+#include <iostream>			// library input output
+#include <conio.h>			// _getch(), _getche(), clrscr()
+#include <ctime>			// menampilkan waktu dan tanggal
+#include <stdlib.h>			//operasi pembanding dan operasi konversi
+#include <string>			//berfungsi untuk melakukan manipulasi string
+#include <fstream>			// output teks
+#include <dos.h>			// delay
+
+using namespace std;
+
+string makanan[10];
+
+int admin();
+int user();
+
+int main()
+{
+	int pilihan;
+awal:
+	// HEADER
+	system("CLS");
+	cout << "-----------------------------------------" << endl;
+	cout << "             MERBABU RESTO               " << endl;
+	cout << " jl. Wahidin Sudirohusodo No. 99, Klaten " << endl;
+	cout << "-----------------------------------------" << endl << endl;
+	cout << "Menu" << endl;
+	cout << "1. USER" << endl;
+	cout << "2. ADMIN" << endl;
+	cout << "3. SUPERADMIN" << endl;
+	cout << "4. EXIT" << endl;
+	cout << "Masukan Pilihan : ";
+	cin >> pilihan;
+
+	switch (pilihan)
+	{
+	case 1 :
+		user();
+		_getch();
+		goto awal;
+		break;
+	case 2:
+		cout << "-----------------------------------------" << endl;
+		cout << "                  ADMIN                  " << endl;
+		cout << "-----------------------------------------" << endl;
+		admin();
+		_getch();
+		goto awal;
+		break;
+	case 3:
+		cout << "-----------------------------------------" << endl;
+		cout << "              SUPER ADMIN                " << endl;
+		cout << "-----------------------------------------" << endl;
+		_getch();
+		goto awal;
+		break;
+	case 4:
+		exit(1);
+		return (1);
+		break;
+	default:
+		cout << "Pilihan yang anda masukan Salah" << endl;
+		_getch();
+		goto awal;
+		break;
+	}
+	_getch();
+	return 0;
+}
+int user()
+{
+	system("CLS");
+	cout << "-----------------------------------------" << endl;
+	cout << "             MERBABU RESTO               " << endl;
+	cout << " jl. Wahidin Sudirohusodo No. 99, Klaten " << endl;
+	cout << "-----------------------------------------" << endl;
+	cout << "    SELAMAT DATANG DI RESTORANT KAMI     " << endl;
+	cout << "  -Kepuasan Anda adalah Prioritas Kami-  " << endl;
+	cout << "-----------------------------------------" << endl << endl;
+	cout << "Menu Makanan\tHarga" << endl;
+	fstream data_makanan, harga_makanan,data_minuman, harga_minuman;;
+	string isi;
+	int no;
+	data_makanan.open("DATA MAKANAN.txt", ios::in);
+	getline(data_makanan, isi);
+	harga_makanan.open("HARGA MAKANAN.txt", ios::in);
+	getline(harga_makanan, isi);
+	do
+	{
+		getline(data_makanan, isi);
+		cout << isi <<  "\t\t";
+		getline(harga_makanan, isi);
+		cout << isi << endl;
+	} while (!data_makanan.eof());
+	cout << "-----------------------------------------" << endl;
+	cout << "Menu Minuman\tHarga" << endl;
+	data_minuman.open("DATA MINUMAN.txt", ios::in);
+	getline(data_minuman, isi);
+	harga_minuman.open("HARGA MINUMAN.txt", ios::in);
+	getline(harga_minuman, isi);
+	do
+	{
+		getline(data_minuman, isi);
+		cout << isi << "\t";
+		getline(harga_minuman, isi);
+		cout << isi << endl;
+	} while (!data_minuman.eof());
+	cout << "-----------------------------------------" << endl << endl;
+	data_makanan.close();
+	harga_makanan.close();
+	data_minuman.close();
+	harga_minuman.close();
+	// Memilih makanan atau minuman yang akan dibeli
+	int pilih_makan;
+	string pilih_menu_makanan;
+	cout << "Apakah Anda Ingin Memesan Makanan / Minuman?(Yes = 1)" << endl;
+	cout << "Masukan Pilihan : ";
+	cin >> pilih_makan;
+	if (pilih_makan == 1)
+	{
+		int b = 0;
+		int jumlah, beli, total, totalharga;
+		int harga = 0;
+		int harga1[10];
+		int harga2[10];
+		int jml[10];
+		cout << "Masukan pilihanmu : ";
+		cin >> pilih_menu_makanan;
+		fstream data_makanan, harga_makanan, data_minuman, harga_minuman;
+		string isi, isi2, isi3, isi4;
+		data_makanan.open("DATA MAKANAN.txt", ios::in);
+		harga_makanan.open("HARGA MAKANAN.txt", ios::in);
+		getline(data_makanan, isi);
+		do
+		{
+			getline(data_makanan, isi);
+			getline(harga_makanan, isi2);
+		} while (isi != pilih_menu_makanan);
+		getline(harga_makanan, isi2);
+		cout << "Harga Produk :  " << isi2 << endl;
+		_getch();
+		data_makanan.close();
+		harga_makanan.close();
+		
+		harga = atoi(isi2.c_str());
+		harga1[b] = harga;
+		cout << endl;
+		cout << "Jumlah : ";
+		cin >> beli;
+		jml[b] = beli;
+		cout << endl;
+		total = harga * beli;
+		harga2[b] = total;
+		b++;
+		cout << "Total = " << total;
+		_getch();
+		return user();
+	}
+	else
+	{
+		cout << "Terimakasih Atas Kunjungan Anda" << endl;
+		_getch();
+		system("CLS");
+		return main();
+	}
+	_getch();
+	return 0;
+}
+int admin()
+{
+	int pilih_admin;
+	system("CLS");
+	cout << "Menu ADMIN" << endl;
+	cout << "1. INPUT MAKANAN" << endl;
+	cout << "2. INPUT MINUMAN" << endl;
+	cout << "3. Kembali" << endl;
+	cout << "Masukan Pilihan : ";
+	cin >> pilih_admin;
+
+	if (pilih_admin == 1)
+	{
+		cout << "---------------------" << endl;
+		cout << "    INPUT MAKANAN    " << endl;
+		cout << "---------------------" << endl;
+
+		fstream data_makanan, harga_makanan;
+		string isi;
+		// INPUT MENU MAKANAN
+		data_makanan.open("DATA MAKANAN.txt", ios::out | ios::app);
+		getline(cin, isi);
+		cout << "Menu Makanan : ";
+		getline(cin, isi);
+		data_makanan << isi + "\n";
+
+		data_makanan.close();
+		// INPUT HARGA MAKANAN
+		string isi2;
+		harga_makanan.open("HARGA MAKANAN.txt", ios::out | ios::app);
+		//getline(cin, isi);
+		cout << "Harga : ";
+		getline(cin, isi2);
+		harga_makanan << isi2 + "\n";
+
+		_getch();
+		harga_makanan.close();
+		
+		return admin();
+	}
+	else if (pilih_admin == 2)
+	{
+		cout << "---------------------" << endl;
+		cout << "    INPUT MINUMAN    " << endl;
+		cout << "---------------------" << endl;
+
+		fstream data_minuman, harga_minuman;
+		char lanjut;
+		string isi3, isi4;
+
+		data_minuman.open("DATA MINUMAN.txt", ios::out | ios::app);
+		getline(cin, isi3);
+		cout << "Menu Minuman : ";
+		getline(cin, isi3);
+		data_minuman << isi3 + "\n";
+		
+		data_minuman.close();	
+		// INPUT HARGA MINUMAN
+		harga_minuman.open("HARGA MINUMAN.txt", ios::out | ios::app);
+		cout << "Harga : ";
+		getline(cin, isi4);
+		harga_minuman << isi4 + "\n";
+		_getch();
+		harga_minuman.close();
+		return admin();
+	}
+	else if (pilih_admin)
+	{
+		return main();
+	}
+	else
+	{
+		cout << "Pilihan Yang Anda Masukan Salah" << endl;
+		_getch();
+		return admin();
+	}
+}
